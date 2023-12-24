@@ -48,7 +48,8 @@ function Div(div)
               -- TODO: strip empty <p> when there is no free translation
             -- #para.content > 0 needed for empty LineBlock lines
             if #para.content > 0 and pandoc.utils.stringify(para.content[1]) == "-" then
-              -- strip leading "-"
+              -- strip leading "-" and " "
+              table.remove(para.content, 1)
               table.remove(para.content, 1)
               -- Element Para cannot have classes, so we use a Plain element
               para = pandoc.Plain(
