@@ -1,16 +1,24 @@
 -- Include Leipzig.js
 function Meta(meta)
-  meta["header-includes"] = pandoc.RawBlock("html", '<link rel="stylesheet" href="//unpkg.com/leipzig/dist/leipzig.min.css">')
-  local meta_include_after = meta["include-after"]
-  table.insert(meta_include_after, 2, pandoc.RawBlock("html", '<script src="//unpkg.com/leipzig/dist/leipzig.min.js"></script>'))
-  table.insert(meta_include_after, 3, pandoc.RawBlock("html", [[
+  local meta_header_includes = meta["header-includes"]
+  if FORMAT:match "html" then
+    meta["header-includes"] = pandoc.RawBlock("html", '<link rel="stylesheet" href="//unpkg.com/leipzig/dist/leipzig.min.css">')
+    local meta_include_after = meta["include-after"]
+    table.insert(meta_include_after, 2, pandoc.RawBlock("html", '<script src="//unpkg.com/leipzig/dist/leipzig.min.js"></script>'))
+    table.insert(meta_include_after, 3, pandoc.RawBlock("html", [[
 <script>
 document.addEventListener('DOMContentLoaded', function() {
   Leipzig().gloss();
 });
 </script>
   ]]))
-  return meta
+    return meta
+  elseif FORMAT:match "latex" or FORMAT:match "beamer" then
+    -- read existing header-includes
+    meta_header_includes[#meta_header_includes+1] = pandoc.MetaBlocks(pandoc.RawBlock("tex", "\\usepackage{expex}"))
+    meta["header-includes"] = meta_header_includes
+    return meta
+  end
 end
 
 function Div(div)
