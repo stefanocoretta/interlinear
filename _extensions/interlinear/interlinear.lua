@@ -15,8 +15,17 @@ document.addEventListener('DOMContentLoaded', function() {
     return meta
   elseif FORMAT:match "latex" or FORMAT:match "beamer" then
     -- read existing header-includes
-    meta_header_includes[#meta_header_includes+1] = pandoc.MetaBlocks(pandoc.RawBlock("tex", "\\usepackage{expex}"))
+    meta_header_includes[#meta_header_includes+1] = pandoc.MetaBlocks(pandoc.RawBlock("tex", [[
+% Fix compatibility with unicode-math (https://github.com/wspr/unicode-math/issues/379#issuecomment-276079476)
+\usepackage{expex}
+\let\expexgla\gla
+\AtBeginDocument{%
+  \let\umgla\gla
+  \let\gla\expexgla
+}
+  ]]))
     meta["header-includes"] = meta_header_includes
+    -- quarto.log.output(meta["header-includes"])
     return meta
   end
 end
@@ -88,11 +97,17 @@ function Div(div)
             if para.text ~= "" and string.sub(para.text, 1, 1) == "-" then
               preamble_n = preamble_n + 1
               -- strip leading "-"
-              para.text = string.gsub(para.text, "^- ", "")
-              para.text = "\\glpreamble " .. para.text .. " //\n"
+              para.text = string.gsub(para.text, "^-", "")
+              if para.text ~= "" then
+                para.text = "\\glpreamble " .. para.text .. " //\n"
+              end
               
             elseif i == preamble_n + 1 then
               para.text = "\\gla " .. para.text .. " //\n"
+
+            elseif i > preamble_n + 1 and i ~= #block.content then
+              para.text = "\\glb " .. para.text .. " //\n"
+
             -- if para is last line, quote it if it's not already quoted
             elseif para.text ~= "" and i == #block.content then
               para.text = "\\glft `" .. para.text .. "' //\n"
@@ -111,7 +126,7 @@ function Div(div)
           local paragraphs_cat = pandoc.RawInline("tex", concatenated_text)
 
           div = pandoc.Div(paragraphs_cat)
-          quarto.log.output(paragraphs_cat)
+          -- quarto.log.output(paragraphs_cat)
 
           -- add back identifiers and classes
           div.identifier = div_identifiers
