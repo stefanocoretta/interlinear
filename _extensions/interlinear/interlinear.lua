@@ -22,8 +22,8 @@ document.addEventListener('DOMContentLoaded', function() {
 end
 
 function Div(div)
-  if FORMAT:match "html" then
-    if div.classes:includes("ex") then
+  if div.classes:includes("ex") then
+    if FORMAT:match "html" then
       -- collect existing identifiers and classes to be added back below
       local div_identifiers = div.identifier
       local div_classes = div.classes
