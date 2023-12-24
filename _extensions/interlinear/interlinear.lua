@@ -26,7 +26,9 @@ function Div(div)
           for i, inline in ipairs(block.content) do
             local para = pandoc.Para(inline)
             -- quarto.log.output(para)
-            -- lines marked with "-" are original gloss lines
+            -- top lines marked with "-" are original gloss lines
+            -- a bottom line with only "-" creates a gloss without free translation
+              -- TODO: strip empty <p> when there is no free translation
             -- #para.content > 0 needed for empty LineBlock lines
             if #para.content > 0 and pandoc.utils.stringify(para.content[1]) == "-" then
               -- strip leading "-"

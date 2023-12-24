@@ -17,3 +17,10 @@ This is another.
 | I believe that we do not need to limit these suffixes now.
 :::
 
+To create an example without free translation:
+
+::: ex
+| el perrito está comiendo
+| the {little dog} is eating
+| -
+:::
