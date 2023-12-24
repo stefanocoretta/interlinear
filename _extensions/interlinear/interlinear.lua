@@ -23,8 +23,9 @@ function Div(div)
       for _, block in ipairs(div.content) do
         if block.t == "LineBlock" then
           local paragraphs = {}
-          for _, inline in ipairs(block.content) do
+          for i, inline in ipairs(block.content) do
             local para = pandoc.Para(inline)
+            -- quarto.log.output(para)
             -- lines marked with "-" are original gloss lines
             -- #para.content > 0 needed for empty LineBlock lines
             if #para.content > 0 and pandoc.utils.stringify(para.content[1]) == "-" then
@@ -36,7 +37,13 @@ function Div(div)
                   .. para.content ..
                   {pandoc.RawInline('html', '</p>')}
                 )
+              -- if para is last line, quote it if it's not already quoted
+              elseif #para.content > 0 and i == #block.content then
+                if para.content[1].t ~= "Quoted" then
+                  para.content = pandoc.Quoted('SingleQuote', para.content)
+                end
             end
+
             table.insert(paragraphs, para)
           end
 
