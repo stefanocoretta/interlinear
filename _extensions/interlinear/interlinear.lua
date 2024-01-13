@@ -12,6 +12,10 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 </script>
   ]]))
+  quarto.doc.add_html_dependency({
+    name = 'examples',
+    stylesheets = {'examples.css'}
+  })
     return meta
   elseif FORMAT:match "latex" or FORMAT:match "beamer" then
     -- read existing header-includes
