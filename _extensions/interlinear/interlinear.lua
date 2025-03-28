@@ -1,6 +1,3 @@
--- Counter to track gloss numbers
-local gloss_counter = 0
-
 -- Include Leipzig.js
 function Meta(meta)
   local meta_header_includes = meta["header-includes"]
@@ -33,6 +30,10 @@ document.addEventListener('DOMContentLoaded', function() {
   end
 end
 
+-- Counter to track gloss numbers
+local gloss_counter = 0
+local gloss_label = {}
+
 function Div(div)
   if div.classes:includes("ex") then
     -- Increment gloss number
@@ -41,11 +42,11 @@ function Div(div)
     if FORMAT:match "html" then
       -- collect existing identifiers and classes to be added back below
       local div_identifiers = div.identifier
+      table.insert(gloss_label, div_identifiers)
       local div_classes = div.classes
       table.insert(div_classes, "g-col-11")
 
       -- Create a numbered gloss span for HTML
-      -- local gloss_number = pandoc.RawInline("html", '<span class="gloss-number" id="' .. div.identifier .. '">(' .. gloss_counter .. ')</span> ')
       local gloss_number = pandoc.RawInline("html", '<div class="g-col-1" id="' .. div.identifier .. '">(' .. gloss_counter .. ')</div> ')
       
       for _, block in ipairs(div.content) do
