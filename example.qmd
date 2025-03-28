@@ -14,7 +14,7 @@ To create an interlinear gloss, use a fenced Div block (`:::`) with class "ex".
 - Interlinear lines that start with "| -" are treated as preambles/original text (i.e. they are not aligned).
 - The last interlinear line is treated as the free translation (single quotes are added automatically).
 
-::: ex
+::: {.ex #ex-kl}
 | - DaH mojaqmeyvam DIvuSnISbe’ ’e’ vIHar
 | DaH mojaq-mey-vam DI-vuS-nIS-be’ ’e’ vI-Har
 | now suffix-PL-DEM 1PL.A.3PL.P-limit-need-NEG that 1SG.A.3SG.P-believe
@@ -23,7 +23,7 @@ To create an interlinear gloss, use a fenced Div block (`:::`) with class "ex".
 
 To create an example without free translation (and without the original text line):
 
-::: ex
+::: {.ex #ex-sp}
 | el perrito está comiendo
 | the {little dog} is eating
 | -

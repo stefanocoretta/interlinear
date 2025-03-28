@@ -1,3 +1,6 @@
+-- Counter to track gloss numbers
+local gloss_counter = 0
+
 -- Include Leipzig.js
 function Meta(meta)
   local meta_header_includes = meta["header-includes"]
@@ -32,14 +35,23 @@ end
 
 function Div(div)
   if div.classes:includes("ex") then
+    -- Increment gloss number
+    gloss_counter = gloss_counter + 1
+
     if FORMAT:match "html" then
       -- collect existing identifiers and classes to be added back below
       local div_identifiers = div.identifier
       local div_classes = div.classes
+      table.insert(div_classes, "g-col-11")
 
+      -- Create a numbered gloss span for HTML
+      -- local gloss_number = pandoc.RawInline("html", '<span class="gloss-number" id="' .. div.identifier .. '">(' .. gloss_counter .. ')</span> ')
+      local gloss_number = pandoc.RawInline("html", '<div class="g-col-1" id="' .. div.identifier .. '">(' .. gloss_counter .. ')</div> ')
+      
       for _, block in ipairs(div.content) do
         if block.t == "LineBlock" then
           local paragraphs = {}
+
           for i, inline in ipairs(block.content) do
             local para = pandoc.Para(inline)
             -- quarto.log.output(para)
@@ -74,7 +86,9 @@ function Div(div)
           -- add back identifiers and classes
           div.identifier = div_identifiers
           div.classes = div_classes
-          return div
+          new_div = pandoc.Div({gloss_number, div})
+          new_div.attr = {class = 'grid'}
+          return  new_div
         end
       end
     end
