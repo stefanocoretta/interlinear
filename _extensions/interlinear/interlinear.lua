@@ -31,24 +31,49 @@ document.addEventListener('DOMContentLoaded', function() {
 end
 
 -- Counter to track gloss numbers
-local gloss_counter = 0
-local gloss_label = {}
+local ex_counter = 0
+local ex_label = {}
 
 function Div(div)
   if div.classes:includes("ex") then
+    -- quarto.log.output(div)
     -- Increment gloss number
-    gloss_counter = gloss_counter + 1
+    ex_counter = ex_counter + 1
+
+    if FORMAT:match "html" then
+      local div_identifiers = div.identifier
+      table.insert(ex_label, div_identifiers)
+
+      -- Create a numbered gloss span for HTML
+      local ex_number = pandoc.RawInline("html", '<div class="g-col-1" id="' .. div.identifier .. '">(' .. ex_counter .. ')</div> <div class="g-col-11">')
+      local close_div = pandoc.RawInline("html", '</div>')
+
+      table.insert(div.content, 1, {ex_number})
+      table.insert(div.content, {close_div})
+
+      local div_classes = div.classes
+      table.insert(div_classes, "grid")
+
+      return div
+    end
+
+    if FORMAT:match "latex" or FORMAT:match "beamer" then
+      local ex_begin = pandoc.RawInline("tex", '\\ex')
+      local ex_end = pandoc.RawInline("tex", '\\xe')
+      table.insert(div.content, 1, ex_begin)
+      table.insert(div.content, ex_end)
+
+      return div
+    end
+  end
+
+  if div.classes:includes("gl") then
 
     if FORMAT:match "html" then
       -- collect existing identifiers and classes to be added back below
       local div_identifiers = div.identifier
-      table.insert(gloss_label, div_identifiers)
       local div_classes = div.classes
-      table.insert(div_classes, "g-col-11")
-
-      -- Create a numbered gloss span for HTML
-      local gloss_number = pandoc.RawInline("html", '<div class="g-col-1" id="' .. div.identifier .. '">(' .. gloss_counter .. ')</div> ')
-      
+    
       for _, block in ipairs(div.content) do
         if block.t == "LineBlock" then
           local paragraphs = {}
@@ -87,9 +112,8 @@ function Div(div)
           -- add back identifiers and classes
           div.identifier = div_identifiers
           div.classes = div_classes
-          new_div = pandoc.Div({gloss_number, div})
-          new_div.attr = {class = 'grid'}
-          return  new_div
+
+          return  div
         end
       end
     end
@@ -103,7 +127,7 @@ function Div(div)
         if block.t == "LineBlock" then
           local preamble_n = 0
           local paragraphs = {}
-          table.insert(paragraphs, pandoc.RawInline('tex', '\\ex\n\\begingl\n'))
+          table.insert(paragraphs, pandoc.RawInline('tex', '\\begingl\n'))
           for i, inline in ipairs(block.content) do
             local para = pandoc.RawInline('tex', pandoc.utils.stringify(inline))
             -- top lines marked with "-" are original gloss lines
@@ -131,7 +155,7 @@ function Div(div)
 
             table.insert(paragraphs, para)
           end
-          table.insert(paragraphs, pandoc.RawInline('tex', '\\endgl\n\\xe'))
+          table.insert(paragraphs, pandoc.RawInline('tex', '\\endgl\n'))
 
           local concatenated_text = ""
           for _, inline in ipairs(paragraphs) do
