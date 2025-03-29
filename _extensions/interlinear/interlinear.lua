@@ -183,3 +183,44 @@ function Div(div)
     end
   end
 end
+
+function Div(div)
+  if FORMAT:match "html" then
+
+    if div.classes:includes("ex") then
+      -- quarto.log.output(div)
+      -- Increment gloss number
+      ex_counter = ex_counter + 1
+  
+        local div_identifiers = div.identifier
+        table.insert(ex_label, div_identifiers)
+  
+        -- Create a numbered gloss span for HTML
+        local ex_number = pandoc.RawInline("html", '<div class="g-col-1" id="' .. div.identifier .. '">(' .. ex_counter .. ')</div> <div class="g-col-11">')
+        local close_div = pandoc.RawInline("html", '</div>')
+  
+        table.insert(div.content, 1, {ex_number})
+        table.insert(div.content, {close_div})
+  
+        local div_classes = div.classes
+        table.insert(div_classes, "grid")
+  
+        return div
+    end
+
+  end
+
+  if FORMAT:match "latex" or FORMAT:match "beamer" then 
+
+    if div.classes:includes("ex") then
+      local ex_begin = pandoc.RawInline("tex", '\\ex\n')
+      local ex_end = pandoc.RawInline("tex", '\n\\xe')
+      table.insert(div.content[1].content, 1, ex_begin)
+      table.insert(div.content[#div.content].content, ex_end)
+      quarto.log.output(div.content)
+
+      return div
+    end
+
+  end
+end
