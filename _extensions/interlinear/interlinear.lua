@@ -16,6 +16,11 @@ document.addEventListener('DOMContentLoaded', function() {
   Leipzig().gloss();
 });
 </script>
+<style>
+.gloss__words:first-child, .gloss--glossed li:first-child {
+    margin-top: 0em !important
+}
+</style>
   ]]))
     return meta
     
