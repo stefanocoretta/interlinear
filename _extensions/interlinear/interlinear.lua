@@ -1,6 +1,11 @@
+-----------------------------
 -- Include Leipzig.js
+-----------------------------
+
 function Meta(meta)
+
   local meta_header_includes = meta["header-includes"]
+
   if FORMAT:match "html" then
     meta["header-includes"] = pandoc.RawBlock("html", '<link rel="stylesheet" href="//unpkg.com/leipzig/dist/leipzig.min.css">')
     local meta_include_after = meta["include-after"]
@@ -13,6 +18,7 @@ document.addEventListener('DOMContentLoaded', function() {
 </script>
   ]]))
     return meta
+    
   elseif FORMAT:match "latex" or FORMAT:match "beamer" then
     -- read existing header-includes
     meta_header_includes[#meta_header_includes+1] = pandoc.MetaBlocks(pandoc.RawBlock("tex", [[
