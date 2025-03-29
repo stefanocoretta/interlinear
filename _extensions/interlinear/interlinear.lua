@@ -124,10 +124,16 @@ function Div(div)
     if div.classes:includes("ex") then
       local ex_begin = pandoc.RawInline("tex", '\\ex\n')
       local ex_end = pandoc.RawInline("tex", '\n\\xe')
-      table.insert(div.content[1].content, 1, ex_begin)
-      table.insert(div.content[#div.content].content, ex_end)
-      quarto.log.output(div.content)
 
+      if div.content[1].t == "Div" then
+        table.insert(div.content[1].content[1].content, 1, ex_begin)
+        table.insert(div.content[1].content[#div.content[1].content].content, ex_end)
+      else
+       table.insert(div.content[1].content, 1, ex_begin)
+       table.insert(div.content[#div.content].content, ex_end)
+      end
+
+      quarto.log.output(div.content)
       return div
     end
 
@@ -168,7 +174,7 @@ function Div(div)
 
             table.insert(paragraphs, para)
           end
-          table.insert(paragraphs, pandoc.RawInline('tex', '\\endgl\n'))
+          table.insert(paragraphs, pandoc.RawInline('tex', '\\endgl'))
 
           local concatenated_text = ""
           for _, inline in ipairs(paragraphs) do
@@ -184,6 +190,7 @@ function Div(div)
           -- add back identifiers and classes
           div.identifier = div_identifiers
           div.classes = div_classes
+
           return div
         end
       end

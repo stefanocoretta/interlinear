@@ -37,6 +37,4 @@ Examples can also be simple paragraphs, with no interlinear glossing.
 
 ::: ex
 Trying this.
-
-Checking what is going on here.
 :::
