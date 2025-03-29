@@ -133,7 +133,7 @@ function Div(div)
        table.insert(div.content[#div.content].content, ex_end)
       end
 
-      quarto.log.output(div.content)
+      -- quarto.log.output(div.content)
       return div
     end
 

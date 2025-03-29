@@ -3,7 +3,8 @@ title: "Interlinear Example"
 filters:
   - interlinear
 format:
-  html: default
+  html:
+    embed-resources: true
   pdf:
     keep-tex: true
 ---
