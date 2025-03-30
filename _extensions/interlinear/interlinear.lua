@@ -9,7 +9,9 @@ function Meta(meta)
   if FORMAT:match "html" then
     meta["header-includes"] = pandoc.RawBlock("html", '<link rel="stylesheet" href="//unpkg.com/leipzig/dist/leipzig.min.css">')
     local meta_include_after = meta["include-after"]
+---@diagnostic disable-next-line: param-type-mismatch
     table.insert(meta_include_after, 2, pandoc.RawBlock("html", '<script src="//unpkg.com/leipzig/dist/leipzig.min.js"></script>'))
+---@diagnostic disable-next-line: param-type-mismatch
     table.insert(meta_include_after, 3, pandoc.RawBlock("html", [[
 <script>
 document.addEventListener('DOMContentLoaded', function() {
