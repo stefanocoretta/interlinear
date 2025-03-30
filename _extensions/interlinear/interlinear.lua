@@ -24,7 +24,7 @@ document.addEventListener('DOMContentLoaded', function() {
 }
 </style>
   ]]))
-    return meta
+return meta
     
   elseif FORMAT:match "latex" or FORMAT:match "beamer" then
     -- read existing header-includes
@@ -45,6 +45,8 @@ end
 
 -- Counter to track gloss numbers
 local ex_counter = 0
+local exi_counter = 0
+local this_ex_counter = ex_counter
 local ex_label = {}
 
 function Div(div)
@@ -68,6 +70,34 @@ function Div(div)
         local div_classes = div.classes
         table.insert(div_classes, "grid")
   
+        return div
+    end
+
+    if div.classes:includes("exi") then
+      if ex_counter > this_ex_counter then
+        exi_counter = 0
+      end
+
+      -- Increment gloss number
+      exi_counter = exi_counter + 1
+      exi_letter = get_letter(exi_counter)
+  
+        local div_identifiers = div.identifier
+        table.insert(ex_label, div_identifiers)
+ 
+        -- Create a numbered gloss span for HTML
+        local exi_number = pandoc.RawInline("html", '<div class="g-col-1" id="' .. div.identifier .. '">' .. exi_letter .. '.</div> <div style="grid-column: span 17;">')
+        local close_div = pandoc.RawInline("html", '</div>')
+  
+        table.insert(div.content, 1, {exi_number})
+        table.insert(div.content, {close_div})
+  
+        local div_classes = div.classes
+        table.insert(div_classes, "grid")
+        table.insert(div.attributes, {"style", "--bs-columns: 18; --bs-gap: 0rem;"})
+  
+        this_ex_counter = ex_counter
+
         return div
     end
 
@@ -199,4 +229,17 @@ function Div(div)
     end
 
   end
+end
+
+-- Function to generate a letter sequence based on the counter
+function get_letter(n)
+  local result = ""
+  n = n - 1
+  -- Generate letter sequence using base-26 logic
+  repeat
+    local remainder = n % 26
+    result = string.char(97 + remainder) .. result -- 97 is ASCII for 'a'
+    n = math.floor(n / 26) - 1
+  until n < 0
+  return result
 end

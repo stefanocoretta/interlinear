@@ -11,31 +11,63 @@ format:
 
 To create an interlinear gloss, use a fenced Div block (`:::`) with class "ex".
 
-- Each line of the interlinear gloss should start with "|".
-- Interlinear lines that start with "| -" are treated as preambles/original text (i.e. they are not aligned).
-- The last interlinear line is treated as the free translation (single quotes are added automatically).
+-   Each line of the interlinear gloss should start with "\|".
+-   Interlinear lines that start with "\| -" are treated as preambles/original text (i.e. they are not aligned).
+-   The last interlinear line is treated as the free translation (single quotes are added automatically).
 
-::: {.ex #ex-kl}
-:::  gl
+:::: {#ex-kl .ex}
+::: gl
 | - DaH mojaqmeyvam DIvuSnISbe’ ’e’ vIHar
 | DaH mojaq-mey-vam DI-vuS-nIS-be’ ’e’ vI-Har
 | now suffix-PL-DEM 1PL.A.3PL.P-limit-need-NEG that 1SG.A.3SG.P-believe
 | I believe that we do not need to limit these suffixes now.
 :::
-:::
+::::
 
 To create an example without free translation (and without the original text line):
 
-::: {.ex #ex-sp}
+:::: {#ex-sp .ex}
 ::: gl
 | el perrito está comiendo
 | the {little dog} is eating
 | -
 :::
-:::
+::::
 
 Examples can also be simple paragraphs, with no interlinear glossing.
 
 ::: ex
 Trying this.
 :::
+
+You can create subexamples with a fenced Div block with class "exi" (for example list item) for each subexample.
+
+::::: ex
+::: exi
+Test one.
+:::
+
+::: exi
+Test two.
+:::
+:::::
+
+More subexamples reset the subexample counter.
+
+::::::: ex
+::: exi
+Test one again.
+:::
+
+::: exi
+Test two again.
+:::
+
+:::: exi
+::: gl
+| n=an apedani mehuni essandu
+| CONN=him that.DAT.SG time.DAT.SG eat.they.shall
+| They shall celebrate him on that date
+:::
+::::
+:::::::
