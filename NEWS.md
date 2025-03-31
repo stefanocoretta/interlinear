@@ -2,7 +2,7 @@
 
 - Add numbering in HTML. 
 
-- Add subexamples suport in HTML.
+- Add subexamples support in HTML and TeX.
 
 # v0.0.1
 
