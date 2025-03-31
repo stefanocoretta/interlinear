@@ -155,18 +155,31 @@ function Div(div)
 
     if FORMAT:match "latex" or FORMAT:match "beamer" then
         if div.classes:includes("ex") then
-            local ex_begin = pandoc.RawInline("tex", '\\ex\n')
+            local ex_begin = pandoc.RawInline("tex", '\\pex\n')
             local ex_end = pandoc.RawInline("tex", '\n\\xe')
 
             if div.content[1].t == "Div" then
                 table.insert(div.content[1].content[1].content, 1, ex_begin)
-                table.insert(div.content[1].content[#div.content[1].content].content, ex_end)
+                table.insert(div.content[#div.content].content[#div.content[1].content].content, ex_end)
             else
                 table.insert(div.content[1].content, 1, ex_begin)
                 table.insert(div.content[#div.content].content, ex_end)
             end
 
             -- quarto.log.output(div.content)
+            return div
+        end
+
+        -- Subexamples
+        if div.classes:includes("exi") then
+            local ex_begin = pandoc.RawInline("tex", '\\a ')
+
+            if div.content[1].t == "Div" then
+                table.insert(div.content[1].content[1].content, 1, ex_begin)
+            else
+                table.insert(div.content[1].content, 1, ex_begin)
+            end
+
             return div
         end
 

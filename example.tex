@@ -99,10 +99,10 @@
 \usepackage{expex}
 \let\expexgla\gla
 \AtBeginDocument{%
-  \let\umgla\gla
-  \let\gla\expexgla
+    \let\umgla\gla
+    \let\gla\expexgla
 }
-  
+    
 \makeatletter
 \@ifpackageloaded{caption}{}{\usepackage{caption}}
 \AtBeginDocument{%
@@ -183,7 +183,7 @@ with class ``ex''.
 \end{itemize}
 
 \phantomsection\label{ex-kl}
-\ex
+\pex
 \begingl
 \glpreamble  DaH mojaqmeyvam DIvuSnISbe’ ’e’ vIHar //
 \gla DaH mojaq-mey-vam DI-vuS-nIS-be’ ’e’ vI-Har //
@@ -196,7 +196,7 @@ To create an example without free translation (and without the original
 text line):
 
 \phantomsection\label{ex-sp}
-\ex
+\pex
 \begingl
 \gla el perrito está comiendo //
 \glb the {little dog} is eating //
@@ -205,8 +205,32 @@ text line):
 
 Examples can also be simple paragraphs, with no interlinear glossing.
 
-\ex
+\pex
 Trying this.
+\xe
+
+You can create subexamples with a fenced Div block with class ``exi''
+(for example list item) for each subexample.
+
+\pex
+\a Test one.
+
+\a Test two.
+\xe
+
+More subexamples reset the subexample counter.
+
+\pex
+\a Test one again.
+
+\a Test two again.
+
+\a \begingl
+\gla n=an apedani mehuni essandu //
+\glb CONN=him that.DAT.SG time.DAT.SG eat.they.shall //
+\glft `They shall celebrate him on that date' //
+\endgl
+
 \xe
 
 
