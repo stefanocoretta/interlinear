@@ -129,11 +129,12 @@ function Div(div)
                                 .. para.content ..
                                 { pandoc.RawInline('html', '</p>') }
                             )
-                            -- if para is last line, quote it if it's not already quoted
-                        elseif #para.content > 0 and i == #block.content then
-                            if para.content[1].t ~= "Quoted" then
-                                para.content = pandoc.Quoted('SingleQuote', para.content)
-                            end
+                        -- DO NOT QUOTE to allow for comments
+                        -- PREVIOUSLY: if para is last line, quote it if it's not already quoted
+                        -- elseif #para.content > 0 and i == #block.content then
+                        --     if para.content[1].t ~= "Quoted" then
+                        --         para.content = pandoc.Quoted('SingleQuote', para.content)
+                        --     end
                         end
 
                         table.insert(paragraphs, para)
@@ -211,9 +212,9 @@ function Div(div)
                         elseif i > preamble_n + 1 and i ~= #block.content then
                             para.text = "\\glb " .. para.text .. " //\n"
 
-                            -- if para is last line, quote it if it's not already quoted
+                        -- DO NOT QUOTE to allow for comments (PREVIOUSLY if para is last line, quote it if it's not already quoted)
                         elseif para.text ~= "" and i == #block.content then
-                            para.text = "\\glft `" .. para.text .. "' //\n"
+                            para.text = "\\glft " .. para.text .. " //\n"
                         end
 
                         table.insert(paragraphs, para)
