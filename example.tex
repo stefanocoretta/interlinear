@@ -150,7 +150,7 @@
 \IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
 \urlstyle{same} % disable monospaced font for URLs
 \hypersetup{
-  pdftitle={Interlinear Example},
+  pdftitle={interlinear examples},
   colorlinks=true,
   linkcolor={blue},
   filecolor={Maroon},
@@ -159,7 +159,7 @@
   pdfcreator={LaTeX via pandoc}}
 
 
-\title{Interlinear Example}
+\title{\texttt{interlinear} examples}
 \author{}
 \date{}
 
@@ -167,8 +167,59 @@
 \maketitle
 
 
+The Quarto filter \texttt{interlinear} enables users to write numbered
+linguistic examples. The filter can also render interlinear glosses. A
+custom implementation for example numbering has been developed for the
+HTML output, while in LaTeX it is handled by expex. Interlinear glossing
+is handled by Leipzig.js in HTML and expex in LaTeX.
+
+\subsection{Numbered examples}\label{numbered-examples}
+
+To create a numbered example, use a fenced Div block (\texttt{:::}) with
+class \texttt{ex}. For example the following code results in Example
+(1).
+
+\begin{verbatim}
+::: ex
+You do the job. You are not the job.
+:::
+\end{verbatim}
+
+\pex
+You do the job. You are not the job.
+\xe
+
+\subsection{Subexamples}\label{subexamples}
+
+You can create subexamples within an \texttt{ex} Div block with a fenced
+Div block with class \texttt{exi} (for ``example item'') for each
+subexample.
+
+\begin{verbatim}
+::: ex
+::: exi
+A bird sings a beautiful song.
+:::
+
+::: exi
+A fish swims in the pool.
+:::
+:::
+\end{verbatim}
+
+Which renders as:
+
+\pex
+\a A bird sings a beautiful song.
+
+\a A fish swims in the pool.
+\xe
+
+\subsection{Interlinear glosses}\label{interlinear-glosses}
+
 To create an interlinear gloss, use a fenced Div block (\texttt{:::})
-with class ``ex''.
+with class \texttt{gl} (usually, within an \texttt{ex} Div). These are
+the current rules:
 
 \begin{itemize}
 \tightlist
@@ -182,18 +233,44 @@ with class ``ex''.
   The last interlinear line is treated as the free translation.
 \end{itemize}
 
-\phantomsection\label{ex-kl}
+For example:
+
+\begin{verbatim}
+::: ex
+::: gl
+| - Gila aburun ferma hamišaluǧ güǧüna amuq’dač.
+| gila abur-u-n ferma hamišaluǧ güǧüna amuq’-da-č.
+| now they-OBL-GEN farm forever behind stay-FUT-NEG
+| 'Now their farm will not stay behind forever.'
+:::
+:::
+\end{verbatim}
+
+\phantomsection\label{ex-lez}
 \pex
 \begingl
-\glpreamble  DaH mojaqmeyvam DIvuSnISbe’ ’e’ vIHar //
-\gla DaH mojaq-mey-vam DI-vuS-nIS-be’ ’e’ vI-Har //
-\glb now suffix-PL-DEM 1PL.A.3PL.P-limit-need-NEG that 1SG.A.3SG.P-believe //
-\glft ‘I believe that we do not need to limit these suffixes now.’ //
+\glpreamble  Gila aburun ferma hamišaluǧ güǧüna amuq’dač. //
+\gla gila abur-u-n ferma hamišaluǧ güǧüna amuq’-da-č. //
+\glb now they-OBL-GEN farm forever behind stay-FUT-NEG //
+\glft ‘Now their farm will not stay behind forever.’ //
 \endgl
 \xe
 
-To create an example without free translation (and without the original
-text line):
+To create a gloss without free translation, add a final empty line
+starting with \texttt{\textbar{}\ -} (the following example is also
+without the original text line):
+
+\begin{verbatim}
+::: ex
+::: gl
+| el perrito está comiendo
+| the {little dog} is eating
+| -
+:::
+:::
+\end{verbatim}
+
+Renders as:
 
 \phantomsection\label{ex-sp}
 \pex
@@ -203,27 +280,38 @@ text line):
 \endgl
 \xe
 
-Examples can also be simple paragraphs, with no interlinear glossing.
+You can include interlinear glosses in subexamples and mix glosses with
+simple sentences. Note that more than three colons \texttt{:} can be
+used for fenced Div blocks to show the different levels of embedding
+within the \texttt{ex} Div (this is entirely optional).
+
+\begin{verbatim}
+::::: ex
+::: exi
+Abandon all hope, ye who enter.
+:::
+
+::: exi
+The Self, smaller than small, greater than great, is hidden in the heart of every creature.
+:::
+
+:::: exi
+::: gl
+| n=an apedani mehuni essandu
+| CONN=him that.DAT.SG time.DAT.SG eat.they.shall
+| 'They shall celebrate him on that date.'
+:::
+::::
+:::::
+\end{verbatim}
+
+Rendered as:
 
 \pex
-Trying this.
-\xe
+\a Abandon all hope, ye who enter.
 
-You can create subexamples with a fenced Div block with class ``exi''
-(for example list item) for each subexample.
-
-\pex
-\a Test one.
-
-\a Test two.
-\xe
-
-More subexamples reset the subexample counter.
-
-\pex
-\a Test one again.
-
-\a Test two again.
+\a The Self, smaller than small, greater than great, is hidden in the
+heart of every creature.
 
 \a \begingl
 \gla n=an apedani mehuni essandu //

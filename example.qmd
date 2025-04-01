@@ -1,5 +1,5 @@
 ---
-title: "Interlinear Example"
+title: "`interlinear` examples"
 filters:
   - interlinear
 format:
@@ -9,22 +9,94 @@ format:
     keep-tex: true
 ---
 
-To create an interlinear gloss, use a fenced Div block (`:::`) with class "ex".
+The Quarto filter `interlinear` enables users to write numbered linguistic examples. The filter can also render interlinear glosses. A custom implementation for example numbering has been developed for the HTML output, while in LaTeX it is handled by expex. Interlinear glossing is handled by Leipzig.js in HTML and expex in LaTeX.
+
+## Numbered examples
+
+To create a numbered example, use a fenced Div block (`:::`) with class `ex`. For example the following code results in Example (1).
+
+```
+::: ex
+You do the job. You are not the job.
+:::
+```
+
+::: ex
+You do the job. You are not the job.
+:::
+
+## Subexamples
+
+You can create subexamples within an `ex` Div block with a fenced Div block with class `exi` (for "example item") for each subexample.
+
+```
+::: ex
+::: exi
+A bird sings a beautiful song.
+:::
+
+::: exi
+A fish swims in the pool.
+:::
+:::
+```
+
+Which renders as:
+
+
+::: ex
+::: exi
+A bird sings a beautiful song.
+:::
+
+::: exi
+A fish swims in the pool.
+:::
+:::
+
+## Interlinear glosses
+
+To create an interlinear gloss, use a fenced Div block (`:::`) with class `gl` (usually, within an `ex` Div). These are the current rules:
 
 -   Each line of the interlinear gloss should start with `|`.
 -   Interlinear lines that start with `| -` are treated as preambles/original text (i.e. they are not aligned).
 -   The last interlinear line is treated as the free translation.
 
-:::: {#ex-kl .ex}
+For example:
+
+```
+::: ex
 ::: gl
-| - DaH mojaqmeyvam DIvuSnISbe’ ’e’ vIHar
-| DaH mojaq-mey-vam DI-vuS-nIS-be’ ’e’ vI-Har
-| now suffix-PL-DEM 1PL.A.3PL.P-limit-need-NEG that 1SG.A.3SG.P-believe
-| 'I believe that we do not need to limit these suffixes now.'
+| - Gila aburun ferma hamišaluǧ güǧüna amuq’dač.
+| gila abur-u-n ferma hamišaluǧ güǧüna amuq’-da-č.
+| now they-OBL-GEN farm forever behind stay-FUT-NEG
+| 'Now their farm will not stay behind forever.'
+:::
+:::
+```
+
+:::: {#ex-lez .ex}
+::: gl
+| - Gila aburun ferma hamišaluǧ güǧüna amuq’dač.
+| gila abur-u-n ferma hamišaluǧ güǧüna amuq’-da-č.
+| now they-OBL-GEN farm forever behind stay-FUT-NEG
+| 'Now their farm will not stay behind forever.'
 :::
 ::::
 
-To create an example without free translation (and without the original text line):
+To create a gloss without free translation, add a final empty line starting with `| -` (the following example is also without the original text line):
+
+```
+::: ex
+::: gl
+| el perrito está comiendo
+| the {little dog} is eating
+| -
+:::
+:::
+```
+
+Renders as:
 
 :::: {#ex-sp .ex}
 ::: gl
@@ -34,33 +106,16 @@ To create an example without free translation (and without the original text lin
 :::
 ::::
 
-Examples can also be simple paragraphs, with no interlinear glossing.
+You can include interlinear glosses in subexamples and mix glosses with simple sentences. Note that more than three colons `:` can be used for fenced Div blocks to show the different levels of embedding within the `ex` Div (this is entirely optional).
 
-::: ex
-Trying this.
-:::
-
-You can create subexamples with a fenced Div block with class "exi" (for example list item) for each subexample.
-
+```
 ::::: ex
 ::: exi
-Test one.
+Abandon all hope, ye who enter.
 :::
 
 ::: exi
-Test two.
-:::
-:::::
-
-More subexamples reset the subexample counter.
-
-::::::: ex
-::: exi
-Test one again.
-:::
-
-::: exi
-Test two again.
+The Self, smaller than small, greater than great, is hidden in the heart of every creature.
 :::
 
 :::: exi
@@ -70,4 +125,25 @@ Test two again.
 | 'They shall celebrate him on that date.'
 :::
 ::::
-:::::::
+:::::
+```
+
+Rendered as:
+
+::::: ex
+::: exi
+Abandon all hope, ye who enter.
+:::
+
+::: exi
+The Self, smaller than small, greater than great, is hidden in the heart of every creature.
+:::
+
+:::: exi
+::: gl
+| n=an apedani mehuni essandu
+| CONN=him that.DAT.SG time.DAT.SG eat.they.shall
+| 'They shall celebrate him on that date.'
+:::
+::::
+:::::
