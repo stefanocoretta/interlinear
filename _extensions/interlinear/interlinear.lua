@@ -5,7 +5,7 @@
 function Meta(meta)
     local meta_header_includes = meta["header-includes"]
 
-    if FORMAT:match "html" then
+    if FORMAT:match "html" or FORMAT:match "revealjs" then
         meta["header-includes"] = pandoc.RawBlock("html",
             '<link rel="stylesheet" href="//unpkg.com/leipzig/dist/leipzig.min.css">')
         local meta_include_after = meta["include-after"]
@@ -13,6 +13,7 @@ function Meta(meta)
         table.insert(meta_include_after, 2,
             pandoc.RawBlock("html", '<script src="//unpkg.com/leipzig/dist/leipzig.min.js"></script>'))
         ---@diagnostic disable-next-line: param-type-mismatch
+        
         table.insert(meta_include_after, 3, pandoc.RawBlock("html", [[
 <script>
 document.addEventListener('DOMContentLoaded', function() {
@@ -50,7 +51,7 @@ local this_ex_counter = ex_counter
 local ex_label = {}
 
 function Div(div)
-    if FORMAT:match "html" then
+    if FORMAT:match "html"  or FORMAT:match "revealjs" then
         if div.classes:includes("ex") then
             -- quarto.log.output(div)
             -- Increment gloss number
