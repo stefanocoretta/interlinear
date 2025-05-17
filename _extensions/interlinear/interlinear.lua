@@ -4,17 +4,18 @@
 
 function Meta(meta)
     local meta_header_includes = meta["header-includes"]
+    local meta_include_after = meta["include-after"]
 
-    if FORMAT:match "html" or FORMAT:match "revealjs" then
-        meta["header-includes"] = pandoc.RawBlock("html",
+    if FORMAT:match "html" then
+        -- Include Leipzig css in header
+        meta_header_includes[#meta_header_includes+1] = pandoc.RawBlock("html",
             '<link rel="stylesheet" href="//unpkg.com/leipzig/dist/leipzig.min.css">')
-        local meta_include_after = meta["include-after"]
-        ---@diagnostic disable-next-line: param-type-mismatch
-        table.insert(meta_include_after, 2,
-            pandoc.RawBlock("html", '<script src="//unpkg.com/leipzig/dist/leipzig.min.js"></script>'))
-        ---@diagnostic disable-next-line: param-type-mismatch
-        
-        table.insert(meta_include_after, 3, pandoc.RawBlock("html", [[
+
+        -- Include Leipzig JS after body
+        meta_include_after[#meta_include_after+1] = pandoc.RawBlock("html", '<script src="//unpkg.com/leipzig/dist/leipzig.min.js"></script>')
+
+        -- Activate Leipzig JS after body
+        meta_include_after[#meta_include_after+1] = pandoc.RawBlock("html", [[
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     Leipzig().gloss();
@@ -25,10 +26,11 @@ document.addEventListener('DOMContentLoaded', function() {
         margin-top: 0em !important
 }
 </style>
-    ]]))
+    ]])
         return meta
     elseif FORMAT:match "latex" or FORMAT:match "beamer" then
-        -- read existing header-includes
+
+        -- Use package expex
         meta_header_includes[#meta_header_includes + 1] = pandoc.MetaBlocks(pandoc.RawBlock("tex", [[
 % Fix compatibility with unicode-math (https://github.com/wspr/unicode-math/issues/379#issuecomment-276079476)
 \usepackage{expex}
@@ -51,7 +53,7 @@ local this_ex_counter = ex_counter
 local ex_label = {}
 
 function Div(div)
-    if FORMAT:match "html"  or FORMAT:match "revealjs" then
+    if FORMAT:match "html" then
         if div.classes:includes("ex") then
             -- quarto.log.output(div)
             -- Increment gloss number
