@@ -212,7 +212,7 @@ document.addEventListener('DOMContentLoaded', function() {
     end
 
         return meta
-    elseif FORMAT:ma"latex" or FORMAT:match "beamer" then
+    elseif FORMAT:match "latex" or FORMAT:match "beamer" then
 
         -- Use package expex
         meta_header_includes[#meta_header_includes + 1] = pandoc.MetaBlocks(pandoc.RawBlock("tex", [[
