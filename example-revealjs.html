@@ -6,11 +6,11 @@
 <script src="example-revealjs_files/libs/quarto-html/tippy.umd.min.js"></script>
 <link href="example-revealjs_files/libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="example-revealjs_files/libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="example-revealjs_files/libs/quarto-html/quarto-syntax-highlighting-de070a7b0ab54f8780927367ac907214.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.7.30">
+<link href="example-revealjs_files/libs/quarto-html/quarto-syntax-highlighting-e1a5c8363afafaef2c763b6775fbf3ca.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.7.31">
 
   <meta name="author" content="Stefano Coretta">
-  <title>RevealJS test</title>
+  <title>interlinear examples: revealjs</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
@@ -30,14 +30,283 @@
     }
   </style>
   <link rel="stylesheet" href="example-revealjs_files/libs/revealjs/dist/theme/quarto-f563837468303362081e247dddd440d0.css">
+  <link href="example-revealjs_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
+  <link href="example-revealjs_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
+  <link href="example-revealjs_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
+  <link href="example-revealjs_files/libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
+  <style type="text/css">
+    .reveal div.sourceCode {
+      margin: 0;
+      overflow: auto;
+    }
+    .reveal div.hanging-indent {
+      margin-left: 1em;
+      text-indent: -1em;
+    }
+    .reveal .slide:not(.center) {
+      height: 100%;
+    }
+    .reveal .slide.scrollable {
+      overflow-y: auto;
+    }
+    .reveal .footnotes {
+      height: 100%;
+      overflow-y: auto;
+    }
+    .reveal .slide .absolute {
+      position: absolute;
+      display: block;
+    }
+    .reveal .footnotes ol {
+      counter-reset: ol;
+      list-style-type: none; 
+      margin-left: 0;
+    }
+    .reveal .footnotes ol li:before {
+      counter-increment: ol;
+      content: counter(ol) ". "; 
+    }
+    .reveal .footnotes ol li > p:first-child {
+      display: inline-block;
+    }
+    .reveal .slide ul,
+    .reveal .slide ol {
+      margin-bottom: 0.5em;
+    }
+    .reveal .slide ul li,
+    .reveal .slide ol li {
+      margin-top: 0.4em;
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide ul[role="tablist"] li {
+      margin-bottom: 0;
+    }
+    .reveal .slide ul li > *:first-child,
+    .reveal .slide ol li > *:first-child {
+      margin-block-start: 0;
+    }
+    .reveal .slide ul li > *:last-child,
+    .reveal .slide ol li > *:last-child {
+      margin-block-end: 0;
+    }
+    .reveal .slide .columns:nth-child(3) {
+      margin-block-start: 0.8em;
+    }
+    .reveal blockquote {
+      box-shadow: none;
+    }
+    .reveal .tippy-content>* {
+      margin-top: 0.2em;
+      margin-bottom: 0.7em;
+    }
+    .reveal .tippy-content>*:last-child {
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide > img.stretch.quarto-figure-center,
+    .reveal .slide > img.r-stretch.quarto-figure-center {
+      display: block;
+      margin-left: auto;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-left,
+    .reveal .slide > img.r-stretch.quarto-figure-left  {
+      display: block;
+      margin-left: 0;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-right,
+    .reveal .slide > img.r-stretch.quarto-figure-right  {
+      display: block;
+      margin-left: auto;
+      margin-right: 0; 
+    }
+  </style>
   <link rel="stylesheet" href="//unpkg.com/leipzig/dist/leipzig.min.css">
+  <style>
+  /* Import Bootstrap's CSS grid system */
+  .grid {
+      display: grid;
+      grid-template-rows: repeat(var(--bs-rows, 1), 1fr);
+      grid-template-columns: repeat(var(--bs-columns, 12), 1fr);
+      gap: var(--bs-gap, 1.5rem);
+    }
+    
+    /* Column spans */
+    .grid .g-col-1 { grid-column: auto/span 1; }
+    .grid .g-col-2 { grid-column: auto/span 2; }
+    .grid .g-col-3 { grid-column: auto/span 3; }
+    .grid .g-col-4 { grid-column: auto/span 4; }
+    .grid .g-col-5 { grid-column: auto/span 5; }
+    .grid .g-col-6 { grid-column: auto/span 6; }
+    .grid .g-col-7 { grid-column: auto/span 7; }
+    .grid .g-col-8 { grid-column: auto/span 8; }
+    .grid .g-col-9 { grid-column: auto/span 9; }
+    .grid .g-col-10 { grid-column: auto/span 10; }
+    .grid .g-col-11 { grid-column: auto/span 11; }
+    .grid .g-col-12 { grid-column: auto/span 12; }
+    
+    /* Column starts */
+    .grid .g-start-1 { grid-column-start: 1; }
+    .grid .g-start-2 { grid-column-start: 2; }
+    .grid .g-start-3 { grid-column-start: 3; }
+    .grid .g-start-4 { grid-column-start: 4; }
+    .grid .g-start-5 { grid-column-start: 5; }
+    .grid .g-start-6 { grid-column-start: 6; }
+    .grid .g-start-7 { grid-column-start: 7; }
+    .grid .g-start-8 { grid-column-start: 8; }
+    .grid .g-start-9 { grid-column-start: 9; }
+    .grid .g-start-10 { grid-column-start: 10; }
+    .grid .g-start-11 { grid-column-start: 11; }
+    
+    /* Responsive breakpoints: sm */
+    @media (min-width: 576px) {
+      .grid .g-col-sm-1 { grid-column: auto/span 1; }
+      .grid .g-col-sm-2 { grid-column: auto/span 2; }
+      .grid .g-col-sm-3 { grid-column: auto/span 3; }
+      .grid .g-col-sm-4 { grid-column: auto/span 4; }
+      .grid .g-col-sm-5 { grid-column: auto/span 5; }
+      .grid .g-col-sm-6 { grid-column: auto/span 6; }
+      .grid .g-col-sm-7 { grid-column: auto/span 7; }
+      .grid .g-col-sm-8 { grid-column: auto/span 8; }
+      .grid .g-col-sm-9 { grid-column: auto/span 9; }
+      .grid .g-col-sm-10 { grid-column: auto/span 10; }
+      .grid .g-col-sm-11 { grid-column: auto/span 11; }
+      .grid .g-col-sm-12 { grid-column: auto/span 12; }
+      .grid .g-start-sm-1 { grid-column-start: 1; }
+      .grid .g-start-sm-2 { grid-column-start: 2; }
+      .grid .g-start-sm-3 { grid-column-start: 3; }
+      .grid .g-start-sm-4 { grid-column-start: 4; }
+      .grid .g-start-sm-5 { grid-column-start: 5; }
+      .grid .g-start-sm-6 { grid-column-start: 6; }
+      .grid .g-start-sm-7 { grid-column-start: 7; }
+      .grid .g-start-sm-8 { grid-column-start: 8; }
+      .grid .g-start-sm-9 { grid-column-start: 9; }
+      .grid .g-start-sm-10 { grid-column-start: 10; }
+      .grid .g-start-sm-11 { grid-column-start: 11; }
+    }
+    
+    /* md */
+    @media (min-width: 768px) {
+      .grid .g-col-md-1 { grid-column: auto/span 1; }
+      .grid .g-col-md-2 { grid-column: auto/span 2; }
+      .grid .g-col-md-3 { grid-column: auto/span 3; }
+      .grid .g-col-md-4 { grid-column: auto/span 4; }
+      .grid .g-col-md-5 { grid-column: auto/span 5; }
+      .grid .g-col-md-6 { grid-column: auto/span 6; }
+      .grid .g-col-md-7 { grid-column: auto/span 7; }
+      .grid .g-col-md-8 { grid-column: auto/span 8; }
+      .grid .g-col-md-9 { grid-column: auto/span 9; }
+      .grid .g-col-md-10 { grid-column: auto/span 10; }
+      .grid .g-col-md-11 { grid-column: auto/span 11; }
+      .grid .g-col-md-12 { grid-column: auto/span 12; }
+      .grid .g-start-md-1 { grid-column-start: 1; }
+      .grid .g-start-md-2 { grid-column-start: 2; }
+      .grid .g-start-md-3 { grid-column-start: 3; }
+      .grid .g-start-md-4 { grid-column-start: 4; }
+      .grid .g-start-md-5 { grid-column-start: 5; }
+      .grid .g-start-md-6 { grid-column-start: 6; }
+      .grid .g-start-md-7 { grid-column-start: 7; }
+      .grid .g-start-md-8 { grid-column-start: 8; }
+      .grid .g-start-md-9 { grid-column-start: 9; }
+      .grid .g-start-md-10 { grid-column-start: 10; }
+      .grid .g-start-md-11 { grid-column-start: 11; }
+    }
+    
+    /* lg */
+    @media (min-width: 992px) {
+      .grid .g-col-lg-1 { grid-column: auto/span 1; }
+      .grid .g-col-lg-2 { grid-column: auto/span 2; }
+      .grid .g-col-lg-3 { grid-column: auto/span 3; }
+      .grid .g-col-lg-4 { grid-column: auto/span 4; }
+      .grid .g-col-lg-5 { grid-column: auto/span 5; }
+      .grid .g-col-lg-6 { grid-column: auto/span 6; }
+      .grid .g-col-lg-7 { grid-column: auto/span 7; }
+      .grid .g-col-lg-8 { grid-column: auto/span 8; }
+      .grid .g-col-lg-9 { grid-column: auto/span 9; }
+      .grid .g-col-lg-10 { grid-column: auto/span 10; }
+      .grid .g-col-lg-11 { grid-column: auto/span 11; }
+      .grid .g-col-lg-12 { grid-column: auto/span 12; }
+      .grid .g-start-lg-1 { grid-column-start: 1; }
+      .grid .g-start-lg-2 { grid-column-start: 2; }
+      .grid .g-start-lg-3 { grid-column-start: 3; }
+      .grid .g-start-lg-4 { grid-column-start: 4; }
+      .grid .g-start-lg-5 { grid-column-start: 5; }
+      .grid .g-start-lg-6 { grid-column-start: 6; }
+      .grid .g-start-lg-7 { grid-column-start: 7; }
+      .grid .g-start-lg-8 { grid-column-start: 8; }
+      .grid .g-start-lg-9 { grid-column-start: 9; }
+      .grid .g-start-lg-10 { grid-column-start: 10; }
+      .grid .g-start-lg-11 { grid-column-start: 11; }
+    }
+    
+    /* xl */
+    @media (min-width: 1200px) {
+      .grid .g-col-xl-1 { grid-column: auto/span 1; }
+      .grid .g-col-xl-2 { grid-column: auto/span 2; }
+      .grid .g-col-xl-3 { grid-column: auto/span 3; }
+      .grid .g-col-xl-4 { grid-column: auto/span 4; }
+      .grid .g-col-xl-5 { grid-column: auto/span 5; }
+      .grid .g-col-xl-6 { grid-column: auto/span 6; }
+      .grid .g-col-xl-7 { grid-column: auto/span 7; }
+      .grid .g-col-xl-8 { grid-column: auto/span 8; }
+      .grid .g-col-xl-9 { grid-column: auto/span 9; }
+      .grid .g-col-xl-10 { grid-column: auto/span 10; }
+      .grid .g-col-xl-11 { grid-column: auto/span 11; }
+      .grid .g-col-xl-12 { grid-column: auto/span 12; }
+      .grid .g-start-xl-1 { grid-column-start: 1; }
+      .grid .g-start-xl-2 { grid-column-start: 2; }
+      .grid .g-start-xl-3 { grid-column-start: 3; }
+      .grid .g-start-xl-4 { grid-column-start: 4; }
+      .grid .g-start-xl-5 { grid-column-start: 5; }
+      .grid .g-start-xl-6 { grid-column-start: 6; }
+      .grid .g-start-xl-7 { grid-column-start: 7; }
+      .grid .g-start-xl-8 { grid-column-start: 8; }
+      .grid .g-start-xl-9 { grid-column-start: 9; }
+      .grid .g-start-xl-10 { grid-column-start: 10; }
+      .grid .g-start-xl-11 { grid-column-start: 11; }
+    }
+    
+    /* xxl */
+    @media (min-width: 1400px) {
+      .grid .g-col-xxl-1 { grid-column: auto/span 1; }
+      .grid .g-col-xxl-2 { grid-column: auto/span 2; }
+      .grid .g-col-xxl-3 { grid-column: auto/span 3; }
+      .grid .g-col-xxl-4 { grid-column: auto/span 4; }
+      .grid .g-col-xxl-5 { grid-column: auto/span 5; }
+      .grid .g-col-xxl-6 { grid-column: auto/span 6; }
+      .grid .g-col-xxl-7 { grid-column: auto/span 7; }
+      .grid .g-col-xxl-8 { grid-column: auto/span 8; }
+      .grid .g-col-xxl-9 { grid-column: auto/span 9; }
+      .grid .g-col-xxl-10 { grid-column: auto/span 10; }
+      .grid .g-col-xxl-11 { grid-column: auto/span 11; }
+      .grid .g-col-xxl-12 { grid-column: auto/span 12; }
+      .grid .g-start-xxl-1 { grid-column-start: 1; }
+      .grid .g-start-xxl-2 { grid-column-start: 2; }
+      .grid .g-start-xxl-3 { grid-column-start: 3; }
+      .grid .g-start-xxl-4 { grid-column-start: 4; }
+      .grid .g-start-xxl-5 { grid-column-start: 5; }
+      .grid .g-start-xxl-6 { grid-column-start: 6; }
+      .grid .g-start-xxl-7 { grid-column-start: 7; }
+      .grid .g-start-xxl-8 { grid-column-start: 8; }
+      .grid .g-start-xxl-9 { grid-column-start: 9; }
+      .grid .g-start-xxl-10 { grid-column-start: 10; }
+      .grid .g-start-xxl-11 { grid-column-start: 11; }
+    }  
+
+  /* Deactivate p margin from revealjs css */
+  .reveal .ex p {
+    margin: 0 !important;
+  }
+
+  </style>
+          
 </head>
 <body class="quarto-light">
   <div class="reveal">
     <div class="slides">
 
 <section id="title-slide" class="quarto-title-block center">
-  <h1 class="title">RevealJS test</h1>
+  <h1 class="title"><code>interlinear</code> examples: revealjs</h1>
 
 <div class="quarto-title-authors">
 <div class="quarto-title-author">
@@ -48,14 +317,16 @@ Stefano Coretta
 </div>
 
 </section>
-<section id="frame" class="slide level2">
-<h2>Frame</h2>
-<iframe src="https://lexurgy-app.vercel.app/sc" width="100%" height="600px" style="border:none;">
-</iframe>
+<section id="overview" class="slide level2">
+<h2>Overview</h2>
+<p>The Quarto filter <code>interlinear</code> enables users to write numbered linguistic examples. The filter can also render interlinear glosses. A custom implementation for example numbering has been developed for the HTML output, while in LaTeX it is handled by expex. Interlinear glossing is handled by Leipzig.js in HTML and expex in LaTeX.</p>
 </section>
 <section id="numbered-examples" class="slide level2">
 <h2>Numbered examples</h2>
 <p>To create a numbered example, use a fenced Div block (<code>:::</code>) with class <code>ex</code>. For example the following code results in Example (1).</p>
+<pre><code>::: ex
+You do the job. You are not the job.
+:::</code></pre>
 <div class="ex grid">
 <div class="g-col-1" id="">(1)</div> <div class="g-col-11">
 <p>You do the job. You are not the job.</p>
@@ -65,6 +336,18 @@ Stefano Coretta
 <section id="subexamples" class="slide level2">
 <h2>Subexamples</h2>
 <p>You can create subexamples within an <code>ex</code> Div block with a fenced Div block with class <code>exi</code> (for “example item”) for each subexample.</p>
+<pre><code>::: ex
+::: exi
+A bird sings a beautiful song.
+:::
+
+::: exi
+A fish swims in the pool.
+:::
+:::</code></pre>
+</section>
+<section id="subexamples-rendered" class="slide level2">
+<h2>Subexamples: rendered</h2>
 <div class="ex grid">
 <div class="g-col-1" id="">(2)</div> <div class="g-col-11">
 <div class="exi grid" style="--bs-columns: 18; --bs-gap: 0rem;">
@@ -88,6 +371,20 @@ Stefano Coretta
 <li>Interlinear lines that start with <code>| -</code> are treated as preambles/original text (i.e.&nbsp;they are not aligned).</li>
 <li>The last interlinear line is treated as the free translation.</li>
 </ul>
+</section>
+<section id="interlinear-glosses-1" class="slide level2">
+<h2>Interlinear glosses</h2>
+<pre><code>::: ex
+::: gl
+| - Gila aburun ferma hamišaluǧ güǧüna amuq’dač.
+| gila abur-u-n ferma hamišaluǧ güǧüna amuq’-da-č.
+| now they-OBL-GEN farm forever behind stay-FUT-NEG
+| 'Now their farm will not stay behind forever.'
+:::
+:::</code></pre>
+</section>
+<section id="interlinear-glosses-rendered" class="slide level2">
+<h2>Interlinear glosses: rendered</h2>
 <div id="ex-lez" class="ex grid">
 <div class="g-col-1" id="ex-lez">(3)</div> <div class="g-col-11">
 <div class="gl" data-gloss="">
@@ -99,9 +396,19 @@ Stefano Coretta
 </div>
 </div>
 </section>
-<section id="no-free-translation" class="slide level2">
-<h2>No free translation</h2>
+<section id="interlinear-glosses-no-translation" class="slide level2">
+<h2>Interlinear glosses: no translation</h2>
 <p>To create a gloss without free translation, add a final empty line starting with <code>| -</code> (the following example is also without the original text line):</p>
+<pre><code>::: ex
+::: gl
+| el perrito está comiendo
+| the {little dog} is eating
+| -
+:::
+:::</code></pre>
+</section>
+<section id="interlinear-glosses-no-translation-rendered" class="slide level2">
+<h2>Interlinear glosses: no translation, rendered</h2>
 <div id="ex-sp" class="ex grid">
 <div class="g-col-1" id="ex-sp">(4)</div> <div class="g-col-11">
 <div class="gl" data-gloss="">
@@ -115,6 +422,26 @@ Stefano Coretta
 <section id="mixing" class="slide level2">
 <h2>Mixing</h2>
 <p>You can include interlinear glosses in subexamples and mix glosses with simple sentences. Note that more than three colons <code>:</code> can be used for fenced Div blocks to show the different levels of embedding within the <code>ex</code> Div (this is entirely optional).</p>
+<pre><code>::::: ex
+::: exi
+Abandon all hope, ye who enter.
+:::
+
+::: exi
+The Self, smaller than small, greater than great, is hidden in the heart of every creature.
+:::
+
+:::: exi
+::: gl
+| n=an apedani mehuni essandu
+| CONN=him that.DAT.SG time.DAT.SG eat.they.shall
+| 'They shall celebrate him on that date.'
+:::
+::::
+:::::</code></pre>
+</section>
+<section id="mixing-rendered" class="slide level2">
+<h2>Mixing: rendered</h2>
 <div class="ex grid">
 <div class="g-col-1" id="">(5)</div> <div class="g-col-11">
 <div class="exi grid" style="--bs-columns: 18; --bs-gap: 0rem;">
