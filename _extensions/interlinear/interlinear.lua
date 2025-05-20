@@ -14,6 +14,34 @@ function Meta(meta)
         -- Include Leipzig JS after body
         meta_include_after[#meta_include_after+1] = pandoc.RawBlock("html", '<script src="//unpkg.com/leipzig/dist/leipzig.min.js"></script>')
 
+        -- Include custom abbreviations
+        if meta.gloss_abbreviations then
+            local abbreviations = meta.gloss_abbreviations
+
+            local abbr_list = {}
+
+            if type(abbreviations) == "table" then
+                for abbr, def in pairs(abbreviations) do
+                  def_str = pandoc.utils.stringify(def)
+          
+                  abbr_list[#abbr_list+1] = abbr .. ": '" .. def_str .. "'"
+                end
+            end
+
+            local abbrs =  table.concat(abbr_list, ", ")
+
+            quarto.log.output(abbrs)
+
+            meta_include_after[#meta_include_after+1] = pandoc.RawBlock("html", [[
+<script>
+    var newAbbreviations = {
+]] .. abbrs .. [[
+};
+    Leipzig().addAbbreviations(newAbbreviations);
+</script>
+]])
+        end
+
         -- Activate Leipzig JS after body
         meta_include_after[#meta_include_after+1] = pandoc.RawBlock("html", [[
 <script>

@@ -851,6 +851,11 @@ The Self, smaller than small, greater than great, is hidden in the heart of ever
       </script>
     <script src="//unpkg.com/leipzig/dist/leipzig.min.js"></script>
     <script>
+        var newAbbreviations = {
+    EVID: 'evidential', CONN: 'connective'};
+        Leipzig().addAbbreviations(newAbbreviations);
+    </script>
+    <script>
     document.addEventListener('DOMContentLoaded', function() {
         Leipzig().gloss();
     });

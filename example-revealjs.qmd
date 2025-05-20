@@ -4,6 +4,11 @@ author: "Stefano Coretta"
 format: revealjs
 filters:
   - interlinear
+# Add custom abbreviations here. You can overwrite Leipzig.js
+# abbreviations.
+gloss_abbreviations:
+  CONN: "connective"
+  EVID: "evidential"
 ---
 
 ## Overview

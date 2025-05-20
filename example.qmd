@@ -7,6 +7,11 @@ format:
     embed-resources: true
   pdf:
     keep-tex: true
+# Add custom abbreviations here. You can overwrite Leipzig.js
+# abbreviations.
+gloss_abbreviations:
+  CONN: "connective"
+  EVID: "evidential"
 ---
 
 The Quarto filter `interlinear` enables users to write numbered linguistic examples. The filter can also render interlinear glosses. A custom implementation for example numbering has been developed for the HTML output, while in LaTeX it is handled by expex. Interlinear glossing is handled by Leipzig.js in HTML and expex in LaTeX.
