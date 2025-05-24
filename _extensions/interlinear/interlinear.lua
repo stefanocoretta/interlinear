@@ -30,8 +30,6 @@ function Meta(meta)
 
             local abbrs =  table.concat(abbr_list, ", ")
 
-            quarto.log.output(abbrs)
-
             meta_include_after[#meta_include_after+1] = pandoc.RawBlock("html", [[
 <script>
     var newAbbreviations = {
@@ -253,7 +251,6 @@ document.addEventListener('DOMContentLoaded', function() {
 }
     ]]))
         meta["header-includes"] = meta_header_includes
-        -- quarto.log.output(meta["header-includes"])
         return meta
     end
 end
@@ -267,7 +264,6 @@ local ex_label = {}
 function Div(div)
     if FORMAT:match "html" or FORMAT:match "revealjs" then
         if div.classes:includes("ex") then
-            -- quarto.log.output(div)
             -- Increment gloss number
             ex_counter = ex_counter + 1
 
@@ -329,7 +325,6 @@ function Div(div)
 
                     for i, inline in ipairs(block.content) do
                         local para = pandoc.Para(inline)
-                        -- quarto.log.output(para)
                         -- top lines marked with "-" are original gloss lines
                         -- a bottom line with only "-" creates a gloss without free translation
                         -- TODO: strip empty <p> when there is no free translation
@@ -382,7 +377,6 @@ function Div(div)
                 table.insert(div.content[#div.content].content, ex_end)
             end
 
-            -- quarto.log.output(div.content)
             return div
         end
 
@@ -445,7 +439,6 @@ function Div(div)
                     local paragraphs_cat = pandoc.RawInline("tex", concatenated_text)
 
                     div = pandoc.Div(paragraphs_cat)
-                    -- quarto.log.output(paragraphs_cat)
 
                     -- add back identifiers and classes
                     div.identifier = div_identifiers
