@@ -1,0 +1,34 @@
+---
+title: "`interlinear` examples using a Lexa database"
+filters:
+  - interlinear
+format:
+  html:
+    embed-resources: true
+---
+
+```markdown
+::::: ex
+:::: exi
+::: {.lexa db=eleryon cl=1 st=1}
+:::
+::::
+
+:::: exi
+::: {.lexa db=eleryon cl=1 st=2}
+:::
+::::
+:::::
+```
+
+::::: ex
+:::: exi
+::: {.lexa db=eleryon cl=1 st=1}
+:::
+::::
+
+:::: exi
+::: {.lexa db=eleryon cl=1 st=2}
+:::
+::::
+:::::

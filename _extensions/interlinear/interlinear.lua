@@ -255,6 +255,9 @@ document.addEventListener('DOMContentLoaded', function() {
     end
 end
 
+-- Load the yaml parser
+local yaml = require("yaml")
+
 -- Counter to track gloss numbers
 local ex_counter = 0
 local exi_counter = 0
@@ -263,6 +266,7 @@ local ex_label = {}
 
 function Div(div)
     if FORMAT:match "html" or FORMAT:match "revealjs" then
+
         if div.classes:includes("ex") then
             -- Increment gloss number
             ex_counter = ex_counter + 1
@@ -310,6 +314,50 @@ function Div(div)
             table.insert(div.attributes, { "style", "--bs-columns: 18; --bs-gap: 0rem;" })
 
             this_ex_counter = ex_counter
+
+            return div
+        end
+
+        if div.classes:includes("lexa") then
+            local db = div.attributes["db"]
+
+            local cl = div.attributes["cl"]
+            local cl_string = "cl_" .. string.rep("0", 6 - #cl) .. cl
+
+            local st = div.attributes["st"]
+            local st_string = "st_" .. string.rep("0", 6 - #st) .. st
+
+            local collection_path = db .. "_lexadb/collections/" .. cl_string .. ".yaml"
+            local f = io.open(collection_path, "r")
+            if not f then
+                error("Could not open file")
+            end
+            local content = f:read("*all")
+            f:close()
+
+            local data = yaml.eval(content)
+
+            local paragraphs = {}
+
+            local sentence = data.sentences[st_string].sentence
+            sentence = pandoc.RawInline("html", '<p class="gloss__line--original">' .. sentence .. '</p>')
+            table.insert(paragraphs, sentence)
+
+            local morpho = data.sentences[st_string].morpho
+            morpho = pandoc.RawInline("html", '<p>' .. morpho .. '</p>')
+            table.insert(paragraphs, morpho)
+
+            local gloss = data.sentences[st_string].gloss
+            gloss = pandoc.RawInline("html", '<p>' .. gloss .. '</p>')
+            table.insert(paragraphs, gloss)
+
+            local translation = data.sentences[st_string].translation
+            translation = pandoc.RawInline("html", '<p>' .. translation .. '</p>')
+            table.insert(paragraphs, translation)
+            
+            div = pandoc.Div(paragraphs)
+            -- add necessary attribute for leipzig.js to process the div
+            div.attributes["data-gloss"] = ""
 
             return div
         end
