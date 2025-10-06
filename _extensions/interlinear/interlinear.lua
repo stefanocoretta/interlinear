@@ -325,6 +325,12 @@ function Div(div)
 
         if div.classes:includes("lexa") then
             local db = div.attributes["db"]
+            local ph = div.attributes["ph"]
+            local tr = div.attributes["tr"]
+
+            if tr == nil then
+                tr = "true"
+            end
 
             if lexa and lexa.db and lexa.db[db] then
                 db_path = pandoc.utils.stringify(lexa.db[db])
@@ -354,6 +360,12 @@ function Div(div)
             sentence = pandoc.RawInline("html", '<p class="gloss__line--original">' .. sentence .. '</p>')
             table.insert(paragraphs, sentence)
 
+            if ph then
+                local phon = data.sentences[st_string].phon
+                phon = pandoc.RawInline("html", '<p class="gloss__line--original" style="font-weight: normal;">[' .. phon .. ']</p>')
+                table.insert(paragraphs, phon)
+            end
+
             local morpho = data.sentences[st_string].morpho
             morpho = pandoc.RawInline("html", '<p>' .. morpho .. '</p>')
             table.insert(paragraphs, morpho)
@@ -362,9 +374,13 @@ function Div(div)
             gloss = pandoc.RawInline("html", '<p>' .. gloss .. '</p>')
             table.insert(paragraphs, gloss)
 
-            local translation = data.sentences[st_string].translation
-            translation = pandoc.RawInline("html", '<p>' .. translation .. '</p>')
-            table.insert(paragraphs, translation)
+            if tr == "true" then
+                local translation = data.sentences[st_string].translation
+                translation = pandoc.RawInline("html", '<p>‘' .. translation .. '’</p>')
+                table.insert(paragraphs, translation)
+            else
+                table.insert(paragraphs, pandoc.RawInline("html",'<p></p>'))
+            end
             
             div = pandoc.Div(paragraphs)
             -- add necessary attribute for leipzig.js to process the div

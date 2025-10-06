@@ -13,12 +13,12 @@ lexa:
 ```markdown
 ::::: ex
 :::: exi
-::: {.lexa db=eleryon cl=1 st=1}
+::: {.lexa db=eleryon cl=1 st=1 tr=false}
 :::
 ::::
 
 :::: exi
-::: {.lexa db=eleryon cl=1 st=2}
+::: {.lexa db=eleryon cl=1 st=2 ph=true}
 :::
 ::::
 :::::
@@ -26,12 +26,12 @@ lexa:
 
 ::::: ex
 :::: exi
-::: {.lexa db=eleryon cl=1 st=1}
+::: {.lexa db=eleryon cl=1 st=1 tr=false}
 :::
 ::::
 
 :::: exi
-::: {.lexa db=eleryon cl=1 st=2}
+::: {.lexa db=eleryon cl=1 st=2 ph=true}
 :::
 ::::
 :::::
