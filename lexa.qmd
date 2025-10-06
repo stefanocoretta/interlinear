@@ -5,6 +5,9 @@ filters:
 format:
   html:
     embed-resources: true
+lexa:
+  db:
+    eleryon: "eleryon_lexadb"
 ---
 
 ```markdown

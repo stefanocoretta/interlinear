@@ -2,7 +2,12 @@
 -- Include Leipzig.js
 -----------------------------
 
+local lexa = nil
+
 function Meta(meta)
+
+    lexa = meta.lexa
+
     local meta_header_includes = meta["header-includes"]
     local meta_include_after = meta["include-after"]
 
@@ -321,13 +326,19 @@ function Div(div)
         if div.classes:includes("lexa") then
             local db = div.attributes["db"]
 
+            if lexa and lexa.db and lexa.db[db] then
+                db_path = pandoc.utils.stringify(lexa.db[db])
+            else
+                error("Database '" .. tostring(db) .. "' not specified in YAML metadata.")
+            end
+
             local cl = div.attributes["cl"]
             local cl_string = "cl_" .. string.rep("0", 6 - #cl) .. cl
 
             local st = div.attributes["st"]
             local st_string = "st_" .. string.rep("0", 6 - #st) .. st
 
-            local collection_path = db .. "_lexadb/collections/" .. cl_string .. ".yaml"
+            local collection_path = db_path .. "/collections/" .. cl_string .. ".yaml"
             local f = io.open(collection_path, "r")
             if not f then
                 error("Could not open file")
@@ -511,3 +522,8 @@ function get_letter(n)
     until n < 0
     return result
 end
+
+return {
+  {Meta = Meta},
+  {Div = Div}
+}
